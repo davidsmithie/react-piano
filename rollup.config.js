@@ -1,6 +1,5 @@
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
-import filesize from 'rollup-plugin-filesize';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import replace from 'rollup-plugin-replace';
 import sourceMaps from 'rollup-plugin-sourcemaps';
@@ -20,8 +19,7 @@ const plugins = [
     exclude: ['node_nodules/**'],
   }),
   commonjs(),
-  sourceMaps(),
-  filesize(),
+  sourceMaps()
 ];
 
 export default [
