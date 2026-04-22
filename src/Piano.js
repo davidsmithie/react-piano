@@ -24,6 +24,10 @@ class Piano extends React.Component {
         midiNumber: PropTypes.number.isRequired,
       }),
     ),
+    selectedRootNums: PropTypes.array,
+    highlightNoteNums: PropTypes.array,
+    chordNoteNums: PropTypes.array,
+    hoveredNote: PropTypes.number
   };
 
   state = {

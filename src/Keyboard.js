@@ -20,6 +20,13 @@ class Keyboard extends React.Component {
     useTouchEvents: PropTypes.bool,
     // If width is not provided, must have fixed width and height in parent container
     width: PropTypes.number,
+    selectedRootNums: PropTypes.array,
+    highlightNoteNums: PropTypes.array,
+    specialNoteNums: PropTypes.array,
+    specialRootNums: PropTypes.array,
+    chordNoteNums: PropTypes.array,
+    scaleSelectMode: PropTypes.string,
+    hoveredNote: PropTypes.number
   };
 
   static defaultProps = {
@@ -27,7 +34,7 @@ class Keyboard extends React.Component {
     gliss: false,
     useTouchEvents: false,
     keyWidthToHeight: 0.33,
-    renderNoteLabel: () => {},
+    renderNoteLabel: () => { },
   };
 
   // Range of midi numbers on keyboard
@@ -69,6 +76,17 @@ class Keyboard extends React.Component {
         {this.getMidiNumbers().map((midiNumber) => {
           const { note, isAccidental } = MidiNumbers.getAttributes(midiNumber);
           const isActive = !this.props.disabled && this.props.activeNotes.includes(midiNumber);
+          const isRoot = (this.props.selectedRootNums && this.props.selectedRootNums.length > 0) ?
+            this.props.selectedRootNums.includes(midiNumber) : false;
+          const isHighlight = (this.props.highlightNoteNums && this.props.highlightNoteNums.length > 0) ?
+            this.props.highlightNoteNums.includes(midiNumber) : false;
+          const isSpecial = (this.props.specialNoteNums && this.props.specialNoteNums.length > 0) ?
+            this.props.specialNoteNums.includes(midiNumber) : false;
+          const isSpecialRoot = (this.props.specialRootNums && this.props.specialRootNums.length > 0) ?
+            this.props.specialRootNums.includes(midiNumber) : false;
+          const isChord = (this.props.chordNoteNums && this.props.chordNoteNums.length > 0) ?
+            this.props.chordNoteNums.includes(midiNumber) : false;
+          const isHovered = this.props.hoveredNote && this.props.hoveredNote >= 0 && this.props.hoveredNote === midiNumber;
           return (
             <Key
               naturalKeyWidth={naturalKeyWidth}
@@ -82,14 +100,22 @@ class Keyboard extends React.Component {
               gliss={this.props.gliss}
               useTouchEvents={this.props.useTouchEvents}
               key={midiNumber}
+              isRoot={isRoot}
+              isHighlight={isHighlight}
+              isSpecial={isSpecial}
+              isSpecialRoot={isSpecialRoot}
+              isChord={isChord}
+              scaleSelectMode={this.props.scaleSelectMode}
+              isHovered={isHovered}
             >
               {this.props.disabled
                 ? null
                 : this.props.renderNoteLabel({
-                    isActive,
-                    isAccidental,
-                    midiNumber,
-                  })}
+                  isActive,
+                  isAccidental,
+                  isChord,
+                  midiNumber,
+                })}
             </Key>
           );
         })}

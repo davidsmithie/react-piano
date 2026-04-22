@@ -18,6 +18,14 @@ class Key extends React.Component {
     accidentalWidthRatio: PropTypes.number.isRequired,
     pitchPositions: PropTypes.object.isRequired,
     children: PropTypes.node,
+    isRoot: PropTypes.bool,
+    isLowlight: PropTypes.bool,
+    isHighlight: PropTypes.bool,
+    isSpecial: PropTypes.bool,
+    isSpecialRoot: PropTypes.bool,
+    isChord: PropTypes.bool, 
+    scaleSelectMode: PropTypes.string,
+    isHovered: PropTypes.number
   };
 
   static defaultProps = {
@@ -73,18 +81,50 @@ class Key extends React.Component {
       active,
       disabled,
       children,
+      isRoot,
+      isHighlight,
+      isSpecial,
+      isSpecialRoot,
+      isChord,
+      isHovered
     } = this.props;
+
+    let classNameString = "ReactPiano__Key ";
+    if (accidental) {
+      classNameString += "ReactPiano__Key--accidental ";
+    } else {
+      classNameString += "ReactPiano__Key--natural ";
+    }
+    if (isSpecial) {
+      classNameString += "ReactPiano__Key--special ";
+    }
+    if (isSpecialRoot) {
+      classNameString += "ReactPiano__Key--special-root ";
+    }
+    if (disabled) {
+      classNameString += "ReactPiano__Key--disabled ";
+    }
+    if (active || isChord || isHovered) {
+      classNameString += "ReactPiano__Key--active ";
+    }
 
     // Need to conditionally include/exclude handlers based on useTouchEvents,
     // because otherwise mobile taps double fire events.
     return (
       <div
-        className={classNames('ReactPiano__Key', {
-          'ReactPiano__Key--accidental': accidental,
-          'ReactPiano__Key--natural': !accidental,
-          'ReactPiano__Key--disabled': disabled,
-          'ReactPiano__Key--active': active,
-        })}
+        className={classNameString}
+        // className={classNames('ReactPiano__Key', {          
+        //   'ReactPiano__Key--accidental': accidental,
+        //   'ReactPiano__Key--natural': !accidental,
+        //   'ReactPiano__Key--special': isSpecial,
+        //   'ReactPiano__Key--special-root': isSpecialRoot,
+        //   'ReactPiano__Key--disabled': disabled,  
+        //   'ReactPiano__Key--active': (active || isChord || isHovered),
+          //// 'ReactPiano__Key--accidental-lowlight': (accidental && !isChord && isLowlight && !isRoot),
+          //// 'ReactPiano__Key--natural-lowlight': (!accidental && !isChord && isLowlight && !isRoot),
+          //// 'ReactPiano__Key--root': (!isChord && isRoot),
+          //// 'ReactPiano__Key--highlight': (!isChord && isHighlight),                 
+        // })}
         style={{
           left: ratioToPercentage(this.getRelativeKeyPosition(midiNumber) * naturalKeyWidth),
           width: ratioToPercentage(
@@ -99,7 +139,27 @@ class Key extends React.Component {
         onTouchCancel={useTouchEvents ? this.onStopNoteInput : null}
         onTouchEnd={useTouchEvents ? this.onStopNoteInput : null}
       >
-        <div className="ReactPiano__NoteLabelContainer">{children}</div>
+        { isRoot && !accidental ? 
+        (<div style={{ backgroundColor: "rgba(67, 138, 139, 0.5)", borderRadius: "25%", height: ".4rem", width: "1.25rem", marginLeft: "13px", marginTop: "115px" }}>
+        </div>) : 
+        null
+        }
+        { isRoot && accidental ? 
+        (<div style={{ backgroundColor: "rgba(67, 138, 139, 0.5)", borderRadius: "25%", height: ".4rem", width: "1rem", marginLeft: "7px", marginTop: "65px" }}>
+        </div>) : 
+        null
+        }
+        { isHighlight && !accidental ? 
+        (<div style={{ backgroundColor: "rgba(214, 188, 188, .6)", borderRadius: "25%", height: ".4rem", width: "1.25rem", marginLeft: "13px", marginTop: "115px" }}>
+        </div>) : 
+        null
+        }
+        { isHighlight && accidental ? 
+        (<div style={{ backgroundColor: "rgba(214, 188, 188, .6)", borderRadius: "25%", height: ".4rem", width: "1rem", marginLeft: "7px", marginTop: "65px" }}>
+        </div>) : 
+        null
+        }
+        <div className="ReactPiano__NoteLabelContaner">{children}</div>
       </div>
     );
   }

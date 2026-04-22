@@ -23,6 +23,13 @@ class ControlledPiano extends React.Component {
         midiNumber: PropTypes.number.isRequired,
       }),
     ),
+    selectedRootNums: PropTypes.array,
+    highlightNoteNums: PropTypes.array,
+    specialNoteNums: PropTypes.array,
+    specialRootNums: PropTypes.array,
+    chordNoteNums: PropTypes.array,
+    scaleSelectMode: PropTypes.string,
+    hoveredNote: PropTypes.number
   };
 
   static defaultProps = {
@@ -179,6 +186,12 @@ class ControlledPiano extends React.Component {
           gliss={this.state.isMouseDown}
           useTouchEvents={this.state.useTouchEvents}
           renderNoteLabel={this.renderNoteLabel}
+          selectedRootNums={this.props.selectedRootNums}
+          highlightNoteNums={this.props.highlightNoteNums}
+          specialNoteNums={this.props.specialNoteNums}
+          specialRootNums={this.props.specialRootNums}
+          chordNoteNums={this.props.chordNoteNums}
+          hoveredNote={this.props.hoveredNote}
         />
       </div>
     );
