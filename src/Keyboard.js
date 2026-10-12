@@ -68,6 +68,7 @@ class Keyboard extends React.Component {
 
   render() {
     const naturalKeyWidth = this.getNaturalKeyWidth();
+    let visualFilter = this.props.specialNoteNums.length > 0;
     return (
       <div
         className={classNames('ReactPiano__Keyboard', this.props.className)}
@@ -107,6 +108,7 @@ class Keyboard extends React.Component {
               isChord={isChord}
               scaleSelectMode={this.props.scaleSelectMode}
               isHovered={isHovered}
+              visualFilter={visualFilter}
             >
               {this.props.disabled
                 ? null

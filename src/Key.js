@@ -86,7 +86,8 @@ class Key extends React.Component {
       isSpecial,
       isSpecialRoot,
       isChord,
-      isHovered
+      isHovered,
+      visualFilter
     } = this.props;
 
     let classNameString = "ReactPiano__Key ";
@@ -102,6 +103,9 @@ class Key extends React.Component {
       classNameString += "ReactPiano__Key--special-root ";
     }
     if (disabled) {
+      classNameString += "ReactPiano__Key--disabled ";
+    }
+    if (visualFilter && !isHighlight && !isRoot && !isSpecial && !isSpecialRoot && !isChord && !isHovered) {
       classNameString += "ReactPiano__Key--disabled ";
     }
     if (active || isChord || isHovered) {
@@ -139,13 +143,13 @@ class Key extends React.Component {
         onTouchCancel={useTouchEvents ? this.onStopNoteInput : null}
         onTouchEnd={useTouchEvents ? this.onStopNoteInput : null}
       >
-        { isRoot && !accidental ? 
-        (<div style={{ backgroundColor: "rgba(67, 138, 139, 0.5)", borderRadius: "25%", height: ".4rem", width: "1.25rem", marginLeft: "13px", marginTop: "115px" }}>
+        {/* { isRoot && !accidental ? 
+        (<div style={{ backgroundColor: "rgba(67, 138, 139, 0.5)", borderRadius: "25%", height: ".25rem", width: "1.25rem", marginLeft: "13px", marginTop: "115px" }}>
         </div>) : 
         null
         }
         { isRoot && accidental ? 
-        (<div style={{ backgroundColor: "rgba(67, 138, 139, 0.5)", borderRadius: "25%", height: ".4rem", width: "1rem", marginLeft: "7px", marginTop: "65px" }}>
+        (<div style={{ backgroundColor: "rgba(67, 138, 139, 0.5)", borderRadius: "25%", height: ".25rem", width: "1rem", marginLeft: "7px", marginTop: "65px" }}>
         </div>) : 
         null
         }
@@ -158,7 +162,7 @@ class Key extends React.Component {
         (<div style={{ backgroundColor: "rgba(214, 188, 188, .6)", borderRadius: "25%", height: ".4rem", width: "1rem", marginLeft: "7px", marginTop: "65px" }}>
         </div>) : 
         null
-        }
+        } */}
         <div className="ReactPiano__NoteLabelContaner">{children}</div>
       </div>
     );

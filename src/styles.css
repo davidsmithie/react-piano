@@ -133,12 +133,12 @@
  * Styles for disabled state
  */
 .ReactPiano__Key--disabled.ReactPiano__Key--accidental {
-  background: #ddd;
+  background: #9f9c9c;
   border: 1px solid #999;
 }
 
 .ReactPiano__Key--disabled.ReactPiano__Key--natural {
-  background: #eee;
+  background: #9f9c9c;
   border: 1px solid #aaa;
 }
 
